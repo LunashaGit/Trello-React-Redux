@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRoutes);
 
-app.use("api/object", objectRoutes);
+app.use("/api/object", objectRoutes);
 
 app.listen(8080, () => {
   console.log("Server is running on port 8080");

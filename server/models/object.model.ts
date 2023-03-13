@@ -9,7 +9,7 @@ interface IObject {
 
 interface IObjectDocument extends IObject, Document {}
 
-const userSchema: Schema<IObjectDocument> = new Schema(
+const ObjectSchema: Schema<IObjectDocument> = new Schema(
   {
     title: {
       type: String,
@@ -39,6 +39,9 @@ const userSchema: Schema<IObjectDocument> = new Schema(
   }
 );
 
-const UserModel: Model<IObjectDocument> = mongoose.model("Object", userSchema);
+const ObjectModel: Model<IObjectDocument> = mongoose.model(
+  "Object",
+  ObjectSchema
+);
 
-export default UserModel;
+export default ObjectModel;

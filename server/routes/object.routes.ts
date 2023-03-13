@@ -13,7 +13,7 @@ const router = rtr.Router();
 router.get("/", getObjects);
 router.get("/user", getObjectsByUser);
 router.get("/:id", getObject);
-router.post("/", createObject);
+router.post("/create", createObject);
 router.patch("/:id", updateObject);
 router.delete("/:id", deleteObject);
 

@@ -37,16 +37,16 @@ export const getObject = async (req: Request, res: Response) => {
 };
 
 export const createObject = async (req: Request, res: Response) => {
-  const { name, description, color, by } = req.body;
+  const { title, description, color, by } = req.body;
 
-  if (!name || !description || !color || !by)
+  if (!title || !description || !color || !by)
     return res.status(400).json({ error: "Missing fields" });
 
   const user = await User.findById(by);
   if (!user) return res.status(400).json({ error: "User not found" });
 
   try {
-    const object = await Object.create({ name, description, color, by });
+    const object = await Object.create({ title, description, color, by });
     res.status(201).json({ object });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -64,11 +64,11 @@ export const updateObject = async (req: Request, res: Response) => {
   const user = await User.findById(idUser);
   if (!user) return res.status(400).json({ error: "User not found" });
 
-  const { name, description, color } = req.body;
+  const { title, description, color } = req.body;
   try {
     await Object.findOneAndUpdate(
       { _id: id, by: idUser },
-      { name, description, color }
+      { title, description, color }
     );
     res.status(200).json({ message: "Object updated" });
   } catch (error) {
