@@ -1,3 +1,4 @@
+// Import Packages
 import * as rtr from "express";
 import {
   getObjects,
@@ -7,9 +8,10 @@ import {
   updateObject,
   deleteObject,
 } from "../controllers/object.controller";
-
+// Configure Routes
 const router = rtr.Router();
 
+// Routes Object
 router.get("/", getObjects);
 router.get("/user", getObjectsByUser);
 router.get("/:id", getObject);
