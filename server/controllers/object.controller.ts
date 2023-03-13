@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Object from "../models/object.model";
+import User from "../models/user.model";
 import { Types } from "mongoose";
 export const getObjects = async (req: Request, res: Response) => {
   try {
@@ -12,6 +13,10 @@ export const getObjects = async (req: Request, res: Response) => {
 
 export const getObjectsByUser = async (req: Request, res: Response) => {
   const idUser = req.body.idUser;
+
+  const user = await User.findById(idUser);
+  if (!user) return res.status(400).json({ error: "User not found" });
+
   try {
     const objects = await Object.find({ by: idUser });
     res.status(200).json({ objects });
@@ -33,6 +38,13 @@ export const getObject = async (req: Request, res: Response) => {
 
 export const createObject = async (req: Request, res: Response) => {
   const { name, description, color, by } = req.body;
+
+  if (!name || !description || !color || !by)
+    return res.status(400).json({ error: "Missing fields" });
+
+  const user = await User.findById(by);
+  if (!user) return res.status(400).json({ error: "User not found" });
+
   try {
     const object = await Object.create({ name, description, color, by });
     res.status(201).json({ object });
@@ -48,6 +60,9 @@ export const updateObject = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const idUser = req.body.idUser;
+
+  const user = await User.findById(idUser);
+  if (!user) return res.status(400).json({ error: "User not found" });
 
   const { name, description, color } = req.body;
   try {
@@ -68,6 +83,9 @@ export const deleteObject = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const idUser = req.body.idUser;
+
+  const user = await User.findById(idUser);
+  if (!user) return res.status(400).json({ error: "User not found" });
 
   try {
     await Object.findOneAndDelete({ _id: id, by: idUser });
