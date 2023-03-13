@@ -12,7 +12,7 @@ export const getObjects = async (req: Request, res: Response) => {
 };
 
 export const getObjectsByUser = async (req: Request, res: Response) => {
-  const idUser = req.body.idUser;
+  const idUser = req.body.by;
 
   const user = await User.findById(idUser);
   if (!user) return res.status(400).json({ error: "User not found" });
@@ -59,9 +59,13 @@ export const updateObject = async (req: Request, res: Response) => {
 
   const { id } = req.params;
 
-  const idUser = req.body.idUser;
+  const idUser = req.body.by;
 
-  const user = await User.findById(idUser);
+  const user = await User.findOne({
+    _id: "640f69b5cf84f367bb02d9eb",
+  });
+
+  console.log(user);
   if (!user) return res.status(400).json({ error: "User not found" });
 
   const { title, description, color } = req.body;
@@ -82,7 +86,7 @@ export const deleteObject = async (req: Request, res: Response) => {
 
   const { id } = req.params;
 
-  const idUser = req.body.idUser;
+  const idUser = req.body.by;
 
   const user = await User.findById(idUser);
   if (!user) return res.status(400).json({ error: "User not found" });
