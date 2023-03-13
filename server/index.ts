@@ -7,6 +7,7 @@ import connectDB from "./database/db";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes";
+import objectRoutes from "./routes/object.routes";
 
 const app: Express = express();
 
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoutes);
+
+app.use("api/object", objectRoutes);
 
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
